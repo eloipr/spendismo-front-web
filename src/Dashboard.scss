@@ -1,0 +1,13 @@
+@import "styles/colors";
+
+.add-button {
+    position: absolute;
+    font-size: 64px;
+    bottom: 24px;
+    right: 48px;
+    cursor: pointer;
+
+    &:hover {
+        background: $icon-background-color;
+    }
+}
