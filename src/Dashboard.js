@@ -9,7 +9,7 @@ const Dashboard = ({ expenses, handleAddExpense }) => {
     };
 
     return (
-        <div>
+        <div className="dashboard">
             {toComponent(expenses)}
             <div>
                 <AddCircleOutlineIcon

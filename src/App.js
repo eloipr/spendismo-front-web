@@ -4,7 +4,7 @@ import Dashboard from "./Dashboard";
 import Modal from "./Modal";
 import NewExpenseForm from "./NewExpenseForm";
 
-const url = "http://localhost:8080/expenses";
+const url = "http://localhost:3000/expenses";
 
 class App extends Component {
     constructor() {

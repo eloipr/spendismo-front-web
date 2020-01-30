@@ -1,0 +1,22 @@
+.expense {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+
+    .expense-name {
+        width: 50%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .expense-date {
+        width: 30%;
+    }
+
+    .expense-amount {
+        width: 20%;
+    }
+
+    &:after {
+    }
+}
