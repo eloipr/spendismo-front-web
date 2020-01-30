@@ -1,7 +1,13 @@
 .expense {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    height: 24px;
+    margin: 8px;
     padding: 8px;
+    border: 1px solid #e9e5e5;
+    border-radius: 4px;
+    box-shadow: 0px 1px 5px -2px #3c3c3cba;
 
     .expense-name {
         width: 50%;
@@ -15,8 +21,6 @@
 
     .expense-amount {
         width: 20%;
-    }
-
-    &:after {
+        text-align: right;
     }
 }

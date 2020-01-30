@@ -1,5 +1,5 @@
 import React from "react";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import AddIcon from "@material-ui/icons/Add";
 import Expense from "./Expense";
 import "./Dashboard.scss";
 
@@ -11,12 +11,8 @@ const Dashboard = ({ expenses, handleAddExpense }) => {
     return (
         <div className="dashboard">
             {toComponent(expenses)}
-            <div>
-                <AddCircleOutlineIcon
-                    fontSize="large"
-                    className="add-button"
-                    onClick={handleAddExpense}
-                ></AddCircleOutlineIcon>
+            <div className="expense add-button" onClick={handleAddExpense}>
+                <AddIcon fontSize="large" className="icon"></AddIcon>
             </div>
         </div>
     );
