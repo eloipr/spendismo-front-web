@@ -1,11 +1,11 @@
 import React from "react";
 import AddIcon from "@material-ui/icons/Add";
-import Expense from "./Expense";
+import Expense from "../Expense/Expense";
 import "./Dashboard.scss";
 
 const Dashboard = ({ expenses, handleAddExpense }) => {
-    const toComponent = expensesList => {
-        return expensesList.map(expense => <Expense key={expense._id} expense={expense}></Expense>);
+    const toComponent = expenses => {
+        return Object.keys(expenses).map(key => <Expense key={key} expense={expenses[key]}></Expense>);
     };
 
     return (

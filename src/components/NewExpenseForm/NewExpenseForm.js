@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import "date-fns";
+import { MuiPickersUtilsProvider, KeyboardDatePicker, DatePicker } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import "./NewExpenseForm.scss";
 
 class NewExpenseForm extends Component {
@@ -10,9 +13,12 @@ class NewExpenseForm extends Component {
     handleInputChange = event => {
         const target = event.target;
         const name = target.name;
-        const value = target.validity.valid ? target.value : this.state[name];
-
+        const value = target.value;
         this.setState({ [name]: value });
+    };
+
+    handleDateChange = date => {
+        this.setState({ date });
     };
 
     onSubmit = event => {
@@ -21,7 +27,7 @@ class NewExpenseForm extends Component {
     };
 
     render() {
-        const { name, amount } = this.state;
+        const { name, amount, date } = this.state;
 
         return (
             <form className="new-expense-form" onSubmit={this.onSubmit}>
@@ -37,6 +43,20 @@ class NewExpenseForm extends Component {
                     onChange={this.handleInputChange}
                     required
                 />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                        disableToolbar
+                        autoOk
+                        initialFocusedDate={Date.now()}
+                        variant="inline"
+                        format="dd/MM/yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Date picker inline"
+                        value={date}
+                        onChange={this.handleDateChange}
+                    />
+                </MuiPickersUtilsProvider>
                 <input type="submit" value="Submit" />
             </form>
         );

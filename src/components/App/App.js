@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import "./App.scss";
-import Dashboard from "./Dashboard";
-import Modal from "./Modal";
-import NewExpenseForm from "./NewExpenseForm";
-
-const url = "http://localhost:3000/expenses";
+import Dashboard from "../Dashboard/Dashboard";
+import Modal from "../Modal/Modal";
+import NewExpenseForm from "../NewExpenseForm/NewExpenseForm";
+import { getExpenses, addExpense } from "../../services/expenses";
 
 class App extends Component {
     constructor() {
         super();
         this.state = {
-            expenses: [],
+            expenses: {},
             showAddExpense: false
         };
     }
@@ -19,13 +18,11 @@ class App extends Component {
         this.getExpenses();
     }
 
-    getExpenses = () => {
-        fetch(url)
-            .then(res => res.json())
-            .then(expenses => {
-                this.setState({ expenses });
-            });
-    };
+    getExpenses() {
+        getExpenses().subscribe(expenses => {
+            this.setState({ expenses });
+        });
+    }
 
     showAddExpense = () => {
         this.setState({ showAddExpense: true });
@@ -36,11 +33,7 @@ class App extends Component {
     };
 
     addExpense = expense => {
-        fetch(url, {
-            method: "post",
-            body: JSON.stringify(expense),
-            headers: { "Content-Type": "application/json" }
-        }).then(res => {
+        addExpense(expense).subscribe(res => {
             this.getExpenses();
             this.hideAddExpense();
         });
