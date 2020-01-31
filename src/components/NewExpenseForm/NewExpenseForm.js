@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "date-fns";
-import { MuiPickersUtilsProvider, KeyboardDatePicker, DatePicker } from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import "./NewExpenseForm.scss";
 
