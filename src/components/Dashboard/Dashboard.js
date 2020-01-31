@@ -1,6 +1,7 @@
 import React from "react";
 import AddIcon from "@material-ui/icons/Add";
-import Expense from "../Expense/Expense";
+import Summary from "./../Summary/Summary";
+import Expense from "./../Expense/Expense";
 import "./Dashboard.scss";
 
 const Dashboard = ({ expenses, handleAddExpense }) => {
@@ -10,6 +11,7 @@ const Dashboard = ({ expenses, handleAddExpense }) => {
 
     return (
         <div className="dashboard">
+            <Summary></Summary>
             {toComponent(expenses)}
             <div className="expense add-button" onClick={handleAddExpense}>
                 <AddIcon fontSize="large" className="icon"></AddIcon>
