@@ -24,6 +24,7 @@ class NewExpenseForm extends Component {
     onSubmit = event => {
         event.preventDefault();
         this.props.handleSubmit(this.state);
+        this.setState({ name: "", amount: "", date: Date.now() });
     };
 
     render() {

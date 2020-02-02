@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.scss";
-import Dashboard from "../Dashboard/Dashboard";
-import Modal from "../Modal/Modal";
-import NewExpenseForm from "../NewExpenseForm/NewExpenseForm";
-import { getExpenses, addExpense } from "../../services/expenses";
+import Dashboard from "./../Dashboard/Dashboard";
+import Modal from "./../Modal/Modal";
+import SignIn from "./../SignIn/SignIn";
+import NewExpenseForm from "./../NewExpenseForm/NewExpenseForm";
+import { getExpenses, addExpense } from "./../../services/expenses";
+import AuthRoute from "./../AuthRoute";
 
 class App extends Component {
     constructor() {
@@ -43,15 +46,24 @@ class App extends Component {
         const { expenses, showAddExpense } = this.state;
         const newExpenseForm = <NewExpenseForm handleSubmit={this.addExpense}></NewExpenseForm>;
         return (
-            <main>
-                <Dashboard expenses={expenses} handleAddExpense={this.showAddExpense}></Dashboard>
-                <Modal
-                    show={showAddExpense}
-                    handleAccept={this.addExpense}
-                    handleClose={this.hideAddExpense}
-                    content={newExpenseForm}
-                ></Modal>
-            </main>
+            <BrowserRouter>
+                <Switch>
+                    <AuthRoute path="/dashboard">
+                        <main>
+                            <Dashboard expenses={expenses} handleAddExpense={this.showAddExpense}></Dashboard>
+                            <Modal
+                                show={showAddExpense}
+                                handleAccept={this.addExpense}
+                                handleClose={this.hideAddExpense}
+                                content={newExpenseForm}
+                            ></Modal>
+                        </main>
+                    </AuthRoute>
+                    <Route path="/sign-in">
+                        <SignIn></SignIn>
+                    </Route>
+                </Switch>
+            </BrowserRouter>
         );
     }
 }
