@@ -48,7 +48,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    <AuthRoute path="/dashboard">
+                    <AuthRoute exact path="/">
                         <main>
                             <Dashboard expenses={expenses} handleAddExpense={this.showAddExpense}></Dashboard>
                             <Modal

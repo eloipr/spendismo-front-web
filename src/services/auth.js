@@ -1,5 +1,3 @@
-import { ajax } from "rxjs/ajax";
-
 const auth = {
     isAuthenticated: false,
     authenticate(cb) {

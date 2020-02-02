@@ -3,23 +3,7 @@ import auth from "../services/auth";
 import { Route, Redirect } from "react-router-dom";
 
 const AuthRoute = ({ children, ...rest }) => {
-    return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                auth.isAuthenticated ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: "/sign-in",
-                            state: { from: location }
-                        }}
-                    />
-                )
-            }
-        />
-    );
+    return <Route {...rest} render={() => (auth.isAuthenticated ? children : <Redirect to="/sign-in" />)} />;
 };
 
 export default AuthRoute;
