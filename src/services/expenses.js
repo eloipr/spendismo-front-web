@@ -15,7 +15,7 @@ export const getExpenses = () => {
     );
 };
 
-export const addExpense = expense => {
+export const createExpense = expense => {
     return ajax({ url: apiUrl, method: "POST", body: expense, withCredentials: true }).pipe(map(res => res.response));
     // return ajax.post(apiUrl, expense);
 };

@@ -1,9 +1,23 @@
-import React from "react";
-import auth from "../services/auth";
+import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
+import AuthContext from "./../AuthContext";
 
 const AuthRoute = ({ children, ...rest }) => {
-    return <Route {...rest} render={() => (auth.isAuthenticated ? children : <Redirect to="/sign-in" />)} />;
+    const authenticated = useContext(AuthContext);
+    return (
+        <Route
+            {...rest}
+            render={() => {
+                if (authenticated === undefined) {
+                    return <div>Loading</div>;
+                } else if (authenticated) {
+                    return children;
+                } else {
+                    return <Redirect to="/sign-in" />;
+                }
+            }}
+        />
+    );
 };
 
 export default AuthRoute;
