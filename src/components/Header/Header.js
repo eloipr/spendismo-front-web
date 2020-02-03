@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import "./Header.scss";
 import AuthContext from "./../../AuthContext";
 
@@ -15,11 +16,7 @@ const Header = ({ handleLogout }) => {
     return (
         <div className="header">
             <div className="title">Spendismo</div>
-            {authenticated && (
-                <div className="user-info" onClick={onLogoutClick}>
-                    Logout
-                </div>
-            )}
+            {authenticated && <ExitToAppIcon className="logout-button" onClick={onLogoutClick}></ExitToAppIcon>}
         </div>
     );
 };
