@@ -1,14 +1,24 @@
-import React, { useEffect } from "react";
-import { getExpensesByMonth } from "./../../services/expenses";
+import React from "react";
 
-const Summary = () => {
-    useEffect(() => {
-        const month = new Date().getMonth() + 1;
-        getExpensesByMonth(month).subscribe(expenses => {
-            console.log(expenses);
+const Summary = ({ monthExpenses }) => {
+    const getTotalCost = () => {
+        let total = 0;
+        monthExpenses.forEach(expense => {
+            total += expense.amount;
         });
-    }, []);
-    return <div></div>;
+        return total;
+    };
+
+    const getTotalExpenses = () => {
+        return monthExpenses.length;
+    };
+
+    return (
+        <div>
+            <div>{getTotalExpenses()}</div>
+            <div>{getTotalCost()}</div>
+        </div>
+    );
 };
 
 export default Summary;

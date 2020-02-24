@@ -15,18 +15,6 @@ export const getExpenses = () => {
     );
 };
 
-export const getExpensesByMonth = month => {
-    return ajax({ url: `${apiUrl}/month/${month}`, method: "GET", withCredentials: true }).pipe(
-        map(res => {
-            const expenses = res.response;
-            return expenses.reduce((acc, current) => {
-                acc[current._id] = current;
-                return acc;
-            }, {});
-        })
-    );
-};
-
 export const createExpense = expense => {
     return ajax({ url: apiUrl, method: "POST", body: expense, withCredentials: true }).pipe(map(res => res.response));
 };

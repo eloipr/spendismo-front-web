@@ -10,6 +10,7 @@ import "./Dashboard.scss";
 const Dashboard = () => {
     const [expenses, setExpenses] = useState({});
     const [showAddExpense, setShowAddExpense] = useState(false);
+
     useEffect(() => {
         updateExpenses();
     }, []);
@@ -39,21 +40,26 @@ const Dashboard = () => {
         return Object.keys(expenses).map(key => <Expense key={key} expense={expenses[key]}></Expense>);
     };
 
-    const newExpenseForm = <NewExpenseForm handleSubmit={addExpense}></NewExpenseForm>;
+    const getMonthExpenses = expenses => {
+        const currentMonth = new Date().getMonth();
+        return Object.keys(expenses).reduce((acc, key) => {
+            if (new Date(expenses[key].date).getMonth() === currentMonth) {
+                acc.push(expenses[key]);
+            }
+            return acc;
+        }, []);
+    };
 
     return (
         <div className="dashboard">
-            <Summary></Summary>
+            <Summary monthExpenses={getMonthExpenses(expenses)}></Summary>
             {toComponent(expenses)}
-            <div className="expense add-button" onClick={showAddExpenseModal}>
+            <div className="expense add-button" onClick={showAddExpenseModal} data-testid="new-expense-button">
                 <AddIcon fontSize="large" className="icon"></AddIcon>
             </div>
-            <Modal
-                show={showAddExpense}
-                handleAccept={addExpense}
-                handleClose={hideAddExpense}
-                content={newExpenseForm}
-            ></Modal>
+            <Modal show={showAddExpense} handleAccept={addExpense} handleClose={hideAddExpense}>
+                <NewExpenseForm handleSubmit={addExpense}></NewExpenseForm>
+            </Modal>
         </div>
     );
 };
