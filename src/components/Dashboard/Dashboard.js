@@ -50,9 +50,13 @@ const Dashboard = () => {
         }, []);
     };
 
+    const expensesToArray = expenses => {
+        return Object.keys(expenses).map(key => expenses[key]);
+    };
+
     return (
         <div className="dashboard">
-            <Summary monthExpenses={getMonthExpenses(expenses)}></Summary>
+            <Summary expenses={expensesToArray(expenses)}></Summary>
             {toComponent(expenses)}
             <div className="expense add-button" onClick={showAddExpenseModal} data-testid="new-expense-button">
                 <AddIcon fontSize="large" className="icon"></AddIcon>

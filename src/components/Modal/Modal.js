@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import CloseIcon from "@material-ui/icons/Close";
 import "./Modal.scss";
 
-const Modal = ({ show, handleAccept, handleClose, children }) => {
+const Modal = ({ show, handleClose, children }) => {
     const showHideClass = show ? "modal" : "modal hidden";
 
     return (
@@ -13,6 +14,11 @@ const Modal = ({ show, handleAccept, handleClose, children }) => {
             </section>
         </div>
     );
+};
+
+Modal.propTypes = {
+    show: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func
 };
 
 export default Modal;

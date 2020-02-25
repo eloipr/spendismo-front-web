@@ -1,24 +1,32 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Summary = ({ monthExpenses }) => {
-    const getTotalCost = () => {
-        let total = 0;
-        monthExpenses.forEach(expense => {
-            total += expense.amount;
-        });
-        return total;
+const Summary = ({ expenses }) => {
+    const getBalance = () => {
+        return expenses.reduce((acc, expense) => acc + (expense.isIncome ? -expense.amount : expense.amount), 0);
     };
 
     const getTotalExpenses = () => {
-        return monthExpenses.length;
+        return expenses.length;
     };
 
     return (
         <div>
             <div>{getTotalExpenses()}</div>
-            <div>{getTotalCost()}</div>
+            <div>{getBalance()}</div>
         </div>
     );
+};
+
+Summary.propTypes = {
+    expenses: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            date: PropTypes.string.isRequired,
+            amount: PropTypes.number.isRequired,
+            isIncome: PropTypes.bool.isRequired
+        }).isRequired
+    )
 };
 
 export default Summary;
