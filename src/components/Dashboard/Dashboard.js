@@ -40,16 +40,6 @@ const Dashboard = () => {
         return Object.keys(expenses).map(key => <Expense key={key} expense={expenses[key]}></Expense>);
     };
 
-    const getMonthExpenses = expenses => {
-        const currentMonth = new Date().getMonth();
-        return Object.keys(expenses).reduce((acc, key) => {
-            if (new Date(expenses[key].date).getMonth() === currentMonth) {
-                acc.push(expenses[key]);
-            }
-            return acc;
-        }, []);
-    };
-
     const expensesToArray = expenses => {
         return Object.keys(expenses).map(key => expenses[key]);
     };
