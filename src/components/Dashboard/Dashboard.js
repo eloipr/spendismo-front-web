@@ -48,15 +48,15 @@ const Dashboard = () => {
         });
     };
 
-    const toComponent = expenses => {
-        return Object.keys(expenses).map(key => (
-            <Expense key={key} expense={expenses[key]} handleDelete={removeExpense}></Expense>
+    const toComponent = expensesArr => {
+        return expensesArr.map(expense => (
+            <Expense key={expense._id} expense={expense} handleDelete={removeExpense}></Expense>
         ));
     };
 
-    const expensesToArray = expenses => {
-        return Object.keys(expenses).reduce((acc, key) => {
-            const expense = expenses[key];
+    const expensesToArray = expensesObj => {
+        return Object.keys(expensesObj).reduce((acc, key) => {
+            const expense = expensesObj[key];
             switch (summaryFilter) {
                 case "month": {
                     if (new Date().getMonth() === new Date(expense.date).getMonth()) {
@@ -95,7 +95,7 @@ const Dashboard = () => {
                 handleFilterChange={handleSummaryFilter}
             ></Summary>
             <div>
-                {toComponent(expenses)}
+                {toComponent(expensesToArray(expenses))}
                 <div className="expense add-button" onClick={showAddExpenseModal} data-testid="new-expense-button">
                     <AddIcon fontSize="large" className="add-icon"></AddIcon>
                 </div>
