@@ -4,7 +4,7 @@ import Summary from "./../Summary/Summary";
 import Expense from "./../Expense/Expense";
 import Modal from "./../Modal/Modal";
 import NewExpenseForm from "./../NewExpenseForm/NewExpenseForm";
-import { getExpenses, createExpense } from "./../../services/expenses";
+import { getExpenses, createExpense, deleteExpense } from "./../../services/expenses";
 import "./Dashboard.scss";
 
 const datesAreOnSameDay = (first, second) =>
@@ -36,6 +36,12 @@ const Dashboard = () => {
         });
     };
 
+    const removeExpense = expenseId => {
+        deleteExpense(expenseId).subscribe(res => {
+            updateExpenses();
+        });
+    };
+
     const updateExpenses = () => {
         getExpenses().subscribe(expenses => {
             setExpenses(expenses);
@@ -43,7 +49,9 @@ const Dashboard = () => {
     };
 
     const toComponent = expenses => {
-        return Object.keys(expenses).map(key => <Expense key={key} expense={expenses[key]}></Expense>);
+        return Object.keys(expenses).map(key => (
+            <Expense key={key} expense={expenses[key]} handleDelete={removeExpense}></Expense>
+        ));
     };
 
     const expensesToArray = expenses => {
@@ -89,7 +97,7 @@ const Dashboard = () => {
             <div>
                 {toComponent(expenses)}
                 <div className="expense add-button" onClick={showAddExpenseModal} data-testid="new-expense-button">
-                    <AddIcon fontSize="large" className="icon"></AddIcon>
+                    <AddIcon fontSize="large" className="add-icon"></AddIcon>
                 </div>
             </div>
             <Modal show={showAddExpense} handleAccept={addExpense} handleClose={hideAddExpense}>

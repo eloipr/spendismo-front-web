@@ -18,3 +18,9 @@ export const getExpenses = () => {
 export const createExpense = expense => {
     return ajax({ url: apiUrl, method: "POST", body: expense, withCredentials: true }).pipe(map(res => res.response));
 };
+
+export const deleteExpense = expenseId => {
+    return ajax({ url: `${apiUrl}/${expenseId}`, method: "DELETE", withCredentials: true }).pipe(
+        map(res => res.response)
+    );
+};
