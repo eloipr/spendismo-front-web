@@ -76,10 +76,21 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
-            <Summary expenses={expensesToArray(expenses)} handleFilterChange={handleSummaryFilter}></Summary>
-            {toComponent(expenses)}
-            <div className="expense add-button" onClick={showAddExpenseModal} data-testid="new-expense-button">
-                <AddIcon fontSize="large" className="icon"></AddIcon>
+            <select defaultValue={summaryFilter} onChange={event => handleSummaryFilter(event.target.value)}>
+                <option value="total">Total</option>
+                <option value="month">Current month</option>
+                <option value="today">Today</option>
+            </select>
+            <Summary
+                expenses={expensesToArray(expenses)}
+                filter={summaryFilter}
+                handleFilterChange={handleSummaryFilter}
+            ></Summary>
+            <div>
+                {toComponent(expenses)}
+                <div className="expense add-button" onClick={showAddExpenseModal} data-testid="new-expense-button">
+                    <AddIcon fontSize="large" className="icon"></AddIcon>
+                </div>
             </div>
             <Modal show={showAddExpense} handleAccept={addExpense} handleClose={hideAddExpense}>
                 <NewExpenseForm handleSubmit={addExpense}></NewExpenseForm>

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Summary.scss";
 
-const Summary = ({ expenses, handleFilterChange }) => {
+const Summary = ({ expenses }) => {
     const balance = expenses.reduce((acc, expense) => acc + (expense.isIncome ? expense.amount : -expense.amount), 0);
 
     const totalExpenses = expenses.reduce((acc, expense) => acc + (expense.isIncome ? 0 : expense.amount), 0);
@@ -11,11 +11,6 @@ const Summary = ({ expenses, handleFilterChange }) => {
 
     return (
         <div>
-            <select defaultValue="month" onChange={event => handleFilterChange(event.target.value)}>
-                <option value="total">Total</option>
-                <option value="month">Current month</option>
-                <option value="today">Today</option>
-            </select>
             <div className="summary-details">
                 <div className="summary-row">
                     <span>Expenses: </span>
@@ -48,7 +43,9 @@ Summary.propTypes = {
             amount: PropTypes.number.isRequired,
             isIncome: PropTypes.bool.isRequired
         }).isRequired
-    )
+    ),
+    filter: PropTypes.string.isRequired,
+    handleFilterChange: PropTypes.func.isRequired
 };
 
 export default Summary;
