@@ -38,6 +38,7 @@ const Summary = ({ expenses }) => {
 Summary.propTypes = {
     expenses: PropTypes.arrayOf(
         PropTypes.shape({
+            _id: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             date: PropTypes.string.isRequired,
             amount: PropTypes.number.isRequired,
@@ -48,4 +49,4 @@ Summary.propTypes = {
     handleFilterChange: PropTypes.func.isRequired
 };
 
-export default Summary;
+export default React.memo(Summary);
