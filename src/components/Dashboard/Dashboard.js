@@ -5,6 +5,7 @@ import Expense from "./../Expense/Expense";
 import Modal from "./../Modal/Modal";
 import NewExpenseForm from "./../NewExpenseForm/NewExpenseForm";
 import { getExpenses, createExpense, deleteExpense } from "./../../services/expenses";
+import { objectToArray } from "./../../services/utils";
 import "./Dashboard.scss";
 
 const datesAreOnSameDay = (first, second) =>
@@ -29,15 +30,15 @@ const Dashboard = () => {
         setShowAddExpense(false);
     };
 
-    const addExpense = expense => {
-        createExpense(expense).subscribe(res => {
+    const addExpense = expenseData => {
+        createExpense(expenseData).subscribe(expense => {
             updateExpenses();
             hideAddExpense();
         });
     };
 
     const removeExpense = expenseId => {
-        deleteExpense(expenseId).subscribe(res => {
+        deleteExpense(expenseId).subscribe(expense => {
             updateExpenses();
         });
     };
@@ -54,28 +55,17 @@ const Dashboard = () => {
         ));
     };
 
-    const expensesToArray = expensesObj => {
-        return Object.keys(expensesObj).reduce((acc, key) => {
-            const expense = expensesObj[key];
-            switch (summaryFilter) {
-                case "month": {
-                    if (new Date().getMonth() === new Date(expense.date).getMonth()) {
-                        acc.push(expense);
-                    }
-                    break;
-                }
-                case "today": {
-                    if (datesAreOnSameDay(new Date(), new Date(expense.date))) {
-                        acc.push(expense);
-                    }
-                    break;
-                }
-                default: {
-                    acc.push(expense);
-                }
-            }
-            return acc;
-        }, []);
+    const monthFilter = expense => new Date().getMonth() === new Date(expense.date).getMonth();
+
+    const todayFilter = expense => datesAreOnSameDay(new Date(), new Date(expense.date));
+
+    const filterExpenses = expensesObj => {
+        let expensesArr = objectToArray(expensesObj);
+        return summaryFilter === "month"
+            ? expensesArr.filter(monthFilter)
+            : summaryFilter === "today"
+            ? expensesArr.filter(todayFilter)
+            : expensesArr;
     };
 
     const handleSummaryFilter = value => {
@@ -90,12 +80,12 @@ const Dashboard = () => {
                 <option value="today">Today</option>
             </select>
             <Summary
-                expenses={expensesToArray(expenses)}
+                expenses={filterExpenses(expenses)}
                 filter={summaryFilter}
                 handleFilterChange={handleSummaryFilter}
             ></Summary>
             <div>
-                {toComponent(expensesToArray(expenses))}
+                {toComponent(filterExpenses(expenses))}
                 <div className="expense add-button" onClick={showAddExpenseModal} data-testid="new-expense-button">
                     <AddIcon fontSize="large" className="add-icon"></AddIcon>
                 </div>
