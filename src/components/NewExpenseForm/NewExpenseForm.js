@@ -43,11 +43,19 @@ const NewExpenseForm = ({ handleSubmit }) => {
     return (
         <form className="new-expense-form" onSubmit={onSubmit}>
             <h1>New Expense</h1>
-            <label htmlFor="name">Name:</label>
-            <input name="name" type="text" value={name} onChange={handleInputChange} required />
+            <label htmlFor="name">Name</label>
+            <input id="name" name="name" type="text" value={name} onChange={handleInputChange} required />
             <Switch name="isIncome" checked={isIncome} value={"isIncome"} onChange={handleIsIncomeChange}></Switch>
-            <label htmlFor="amount">Amount:</label>
-            <input name="amount" type="text" pattern="[0-9]*" value={amount} onChange={handleInputChange} required />
+            <label htmlFor="amount">Amount</label>
+            <input
+                id="amount"
+                name="amount"
+                type="text"
+                pattern="[0-9]*"
+                value={amount}
+                onChange={handleInputChange}
+                required
+            />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                     disableToolbar

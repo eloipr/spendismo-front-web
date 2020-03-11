@@ -44,9 +44,7 @@ Summary.propTypes = {
             amount: PropTypes.number.isRequired,
             isIncome: PropTypes.bool.isRequired
         }).isRequired
-    ),
-    filter: PropTypes.string.isRequired,
-    handleFilterChange: PropTypes.func.isRequired
+    )
 };
 
 export default React.memo(Summary);

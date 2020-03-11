@@ -74,16 +74,17 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
-            <select defaultValue={summaryFilter} onChange={event => handleSummaryFilter(event.target.value)}>
+            <h1>Dashboard</h1>
+            <select
+                defaultValue={summaryFilter}
+                onChange={event => handleSummaryFilter(event.target.value)}
+                data-testid="filter"
+            >
                 <option value="total">Total</option>
                 <option value="month">Current month</option>
                 <option value="today">Today</option>
             </select>
-            <Summary
-                expenses={filterExpenses(expenses)}
-                filter={summaryFilter}
-                handleFilterChange={handleSummaryFilter}
-            ></Summary>
+            <Summary expenses={filterExpenses(expenses)}></Summary>
             <div>
                 {toComponent(filterExpenses(expenses))}
                 <div className="expense add-button" onClick={showAddExpenseModal} data-testid="new-expense-button">

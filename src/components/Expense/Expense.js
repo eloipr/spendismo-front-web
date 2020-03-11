@@ -18,7 +18,11 @@ const Expense = ({ expense, handleDelete }) => {
                     {new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(expense.amount)}
                 </div>
             </div>
-            <DeleteIcon className="delete-icon" onClick={() => handleDelete(expense._id)}></DeleteIcon>
+            <DeleteIcon
+                className="delete-icon"
+                onClick={() => handleDelete(expense._id)}
+                data-testid="delete-button"
+            ></DeleteIcon>
         </div>
     );
 };
