@@ -1,7 +1,31 @@
+@import "styles/colors";
+
+.expense-container {
+    display: flex;
+    align-items: center;
+
+    .delete-icon {
+        color: grey;
+        cursor: pointer;
+        display: none;
+
+        &:hover {
+            background: $icon-background-color;
+        }
+    }
+
+    &:hover {
+        .delete-icon {
+            display: block;
+        }
+    }
+}
+
 .expense {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 90%;
     height: 24px;
     margin: 8px;
     padding: 8px;

@@ -1,66 +1,82 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "date-fns";
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import Switch from "@material-ui/core/Switch";
 import DateFnsUtils from "@date-io/date-fns";
 import "./NewExpenseForm.scss";
 
-class NewExpenseForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { name: "", amount: "", date: Date.now() };
-    }
+const NewExpenseForm = ({ handleSubmit }) => {
+    const [input, setInput] = useState({ name: "", amount: "" });
+    const [isIncome, setIsIncome] = useState(false);
+    const [date, setDate] = useState(Date.now());
 
-    handleInputChange = event => {
+    const handleInputChange = event => {
         const target = event.target;
         const name = target.name;
         const value = target.value;
-        this.setState({ [name]: value });
+        setInput({ ...input, [name]: value });
     };
 
-    handleDateChange = date => {
-        this.setState({ date });
+    const handleIsIncomeChange = event => {
+        setIsIncome(event.target.checked);
     };
 
-    onSubmit = event => {
+    const handleDateChange = date => {
+        setDate(date);
+    };
+
+    const onSubmit = event => {
         event.preventDefault();
-        this.props.handleSubmit(this.state);
+        handleSubmit({ ...input, date, isIncome });
+        resetForm();
     };
 
-    render() {
-        const { name, amount, date } = this.state;
+    const resetForm = () => {
+        setInput({ name: "", amount: "" });
+        setIsIncome(false);
+        setDate(Date.now());
+    };
 
-        return (
-            <form className="new-expense-form" onSubmit={this.onSubmit}>
-                <h1>New Expense</h1>
-                <label htmlFor="name">Name:</label>
-                <input name="name" type="text" value={name} onChange={this.handleInputChange} required />
-                <label htmlFor="amount">Amount:</label>
-                <input
-                    name="amount"
-                    type="text"
-                    pattern="[0-9]*"
-                    value={amount}
-                    onChange={this.handleInputChange}
-                    required
+    const { name, amount } = input;
+
+    return (
+        <form className="new-expense-form" onSubmit={onSubmit}>
+            <h1>New Expense</h1>
+            <label htmlFor="name">Name</label>
+            <input id="name" name="name" type="text" value={name} onChange={handleInputChange} required />
+            <Switch name="isIncome" checked={isIncome} value={"isIncome"} onChange={handleIsIncomeChange}></Switch>
+            <label htmlFor="amount">Amount</label>
+            <input
+                id="amount"
+                name="amount"
+                type="text"
+                pattern="[0-9]*"
+                value={amount}
+                onChange={handleInputChange}
+                required
+            />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DatePicker
+                    disableToolbar
+                    autoOk
+                    initialFocusedDate={Date.now()}
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Date picker inline"
+                    value={date}
+                    onChange={handleDateChange}
                 />
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
-                        disableToolbar
-                        autoOk
-                        initialFocusedDate={Date.now()}
-                        variant="inline"
-                        format="dd/MM/yyyy"
-                        margin="normal"
-                        id="date-picker-inline"
-                        label="Date picker inline"
-                        value={date}
-                        onChange={this.handleDateChange}
-                    />
-                </MuiPickersUtilsProvider>
-                <input type="submit" value="Submit" />
-            </form>
-        );
-    }
-}
+            </MuiPickersUtilsProvider>
+            <input type="submit" value="Submit" />
+        </form>
+    );
+};
+
+NewExpenseForm.propTypes = {
+    handleSubmit: PropTypes.func.isRequired
+};
 
 export default NewExpenseForm;

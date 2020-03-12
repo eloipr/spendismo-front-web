@@ -1,11 +1,12 @@
 import { ajax } from "rxjs/ajax";
 import { map } from "rxjs/operators";
 
-const apiUrl = "http://localhost:3000/expenses";
+const apiUrl = "http://localhost:4000/expenses";
 
 export const getExpenses = () => {
-    return ajax.getJSON(apiUrl).pipe(
-        map(expenses => {
+    return ajax({ url: apiUrl, method: "GET", withCredentials: true }).pipe(
+        map(res => {
+            const expenses = res.response;
             return expenses.reduce((acc, current) => {
                 acc[current._id] = current;
                 return acc;
@@ -14,6 +15,12 @@ export const getExpenses = () => {
     );
 };
 
-export const addExpense = expense => {
-    return ajax.post(apiUrl, expense);
+export const createExpense = expense => {
+    return ajax({ url: apiUrl, method: "POST", body: expense, withCredentials: true }).pipe(map(res => res.response));
+};
+
+export const deleteExpense = expenseId => {
+    return ajax({ url: `${apiUrl}/${expenseId}`, method: "DELETE", withCredentials: true }).pipe(
+        map(res => res.response)
+    );
 };

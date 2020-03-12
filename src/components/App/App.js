@@ -1,59 +1,40 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.scss";
-import Dashboard from "../Dashboard/Dashboard";
-import Modal from "../Modal/Modal";
-import NewExpenseForm from "../NewExpenseForm/NewExpenseForm";
-import { getExpenses, addExpense } from "../../services/expenses";
+import Dashboard from "./../Dashboard/Dashboard";
+import SignIn from "./../SignIn/SignIn";
+import Header from "./../Header/Header";
+import AuthRoute from "./../AuthRoute";
+import AuthContext from "./../../AuthContext";
+import { isAuthenticated, logout } from "./../../services/auth";
 
-class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            expenses: {},
-            showAddExpense: false
-        };
-    }
+const App = () => {
+    const [authenticated, setAuthenticated] = useState();
+    useEffect(() => {
+        isAuthenticated().subscribe(res => setAuthenticated(res.isAuthenticated));
+    }, []);
 
-    componentDidMount() {
-        this.getExpenses();
-    }
-
-    getExpenses() {
-        getExpenses().subscribe(expenses => {
-            this.setState({ expenses });
-        });
-    }
-
-    showAddExpense = () => {
-        this.setState({ showAddExpense: true });
-    };
-
-    hideAddExpense = () => {
-        this.setState({ showAddExpense: false });
-    };
-
-    addExpense = expense => {
-        addExpense(expense).subscribe(res => {
-            this.getExpenses();
-            this.hideAddExpense();
+    const handleLogout = () => {
+        logout().subscribe(res => {
+            setAuthenticated(false);
         });
     };
 
-    render() {
-        const { expenses, showAddExpense } = this.state;
-        const newExpenseForm = <NewExpenseForm handleSubmit={this.addExpense}></NewExpenseForm>;
-        return (
-            <main>
-                <Dashboard expenses={expenses} handleAddExpense={this.showAddExpense}></Dashboard>
-                <Modal
-                    show={showAddExpense}
-                    handleAccept={this.addExpense}
-                    handleClose={this.hideAddExpense}
-                    content={newExpenseForm}
-                ></Modal>
-            </main>
-        );
-    }
-}
+    return (
+        <AuthContext.Provider value={authenticated}>
+            <BrowserRouter>
+                <Header handleLogout={handleLogout}></Header>
+                <Switch>
+                    <AuthRoute exact path="/">
+                        <Dashboard></Dashboard>
+                    </AuthRoute>
+                    <Route path="/sign-in">
+                        <SignIn></SignIn>
+                    </Route>
+                </Switch>
+            </BrowserRouter>
+        </AuthContext.Provider>
+    );
+};
 
 export default App;

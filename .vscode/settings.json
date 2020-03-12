@@ -1,11 +1,11 @@
 {
-    "terminal.integrated.env.linux": {
-      "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin"
-    },
-    "terminal.integrated.env.windows": {
-      "PATH": "${env:PATH}:${workspaceFolder}\\node_modules\\.bin"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-    "editor.formatOnPaste": true
-  }
+  "terminal.integrated.env.linux": {
+    "PATH": "${env:PATH}:${workspaceFolder}/node_modules/.bin"
+  },
+  "terminal.integrated.env.windows": {
+    "PATH": "${env:PATH}:${workspaceFolder}\\node_modules\\.bin"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true
+}
